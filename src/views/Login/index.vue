@@ -32,6 +32,7 @@
 </template>
 <script>
 import { passwordRules, userNameRules } from './config'
+import { mapMutations } from 'vuex'
 import { login } from '@/api'
 export default {
   name: 'loginPage',
@@ -51,6 +52,7 @@ export default {
   // 生命周期 - 挂载完成(访问DOM元素)
   mounted() {},
   methods: {
+    ...mapMutations(['setUser']),
     onClickLeft() {
       this.$toast('返回')
     },
@@ -60,8 +62,8 @@ export default {
           username: this.account,
           password: this.password
         })
-        console.log(data)
         if (data.status === 200) {
+          this.setUser(data.body.token)
           this.$toast.success(data.description)
         } else {
           this.$toast.fail(data.description)
