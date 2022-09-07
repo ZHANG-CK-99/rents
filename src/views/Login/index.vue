@@ -32,14 +32,15 @@
 </template>
 <script>
 import { passwordRules, userNameRules } from './config'
+import { login } from '@/api'
 export default {
   name: 'loginPage',
   props: {},
   components: {},
   data() {
     return {
-      account: '',
-      password: '',
+      account: 'hzhmqd',
+      password: '123456',
       userNameRules,
       passwordRules
     }
@@ -53,8 +54,21 @@ export default {
     onClickLeft() {
       this.$toast('返回')
     },
-    onSubmit(values) {
-      console.log('submit', values)
+    async onSubmit() {
+      try {
+        const { data } = await login({
+          username: this.account,
+          password: this.password
+        })
+        console.log(data)
+        if (data.status === 200) {
+          this.$toast.success(data.description)
+        } else {
+          this.$toast.fail(data.description)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
@@ -73,7 +87,7 @@ export default {
     }
   }
   .form {
-    /deep/.van-cell__value input{
+    /deep/.van-cell__value input {
       height: 100px;
     }
   }
