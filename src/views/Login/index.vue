@@ -1,12 +1,13 @@
 <template>
   <div class="container-login">
     <!-- 头部 -->
-    <van-nav-bar
+    <!-- <van-nav-bar
       title="账号登录"
       left-arrow
       @click-left="onClickLeft"
       class="nav-bar"
-    />
+    /> -->
+    <nav-bar title="账号登录"></nav-bar>
     <!-- 表单项 -->
     <van-form @submit="onSubmit" class="form">
       <van-field
@@ -60,9 +61,6 @@ export default {
       })
     },
     ...mapMutations(['setUser']),
-    onClickLeft() {
-      this.$toast('返回')
-    },
     async onSubmit() {
       try {
         this.loading()
@@ -86,17 +84,6 @@ export default {
 </script>
 <style scoped lang="less">
 .container-login {
-  .nav-bar {
-    background-color: #21b97a;
-    :deep(.van-nav-bar__left) {
-      .van-icon-arrow-left {
-        color: #fff;
-      }
-    }
-    :deep(.van-nav-bar__title) {
-      color: #fff;
-    }
-  }
   .form {
     /deep/.van-cell__value input {
       height: 100px;

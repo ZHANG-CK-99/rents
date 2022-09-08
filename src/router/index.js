@@ -32,13 +32,13 @@ const routes = [
         path: 'my',
         name: 'my',
         component: () => import('@/views/my')
-      },
-      {
-        path: 'city',
-        name: 'city',
-        component: () => import('@/views/city')
       }
     ]
+  },
+  {
+    path: '/city',
+    name: 'city',
+    component: () => import('@/views/city')
   }
 ]
 

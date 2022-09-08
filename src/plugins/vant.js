@@ -16,7 +16,10 @@ import {
   Lazyload,
   Search,
   Icon,
-  Image as VanImage
+  Image as VanImage,
+  List,
+  IndexBar,
+  IndexAnchor
 } from 'vant'
 
 const VantList = [
@@ -37,7 +40,10 @@ const VantList = [
   Lazyload,
   Search,
   Icon,
-  VanImage
+  VanImage,
+  List,
+  IndexBar,
+  IndexAnchor
 ]
 
 const registerVants = (Vue) => {

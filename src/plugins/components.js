@@ -1,6 +1,8 @@
 import Search from '@/components/Search'
+import NavBar from '@/components/NavBar'
 const components = {
-  Search
+  Search,
+  NavBar
 }
 
 const registerComponents = (Vue) => {
