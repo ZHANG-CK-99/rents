@@ -52,18 +52,27 @@ export default {
   // 生命周期 - 挂载完成(访问DOM元素)
   mounted() {},
   methods: {
+    loading() {
+      this.$toast.loading({
+        duration: 0,
+        forbidClick: true,
+        message: '登录中...'
+      })
+    },
     ...mapMutations(['setUser']),
     onClickLeft() {
       this.$toast('返回')
     },
     async onSubmit() {
       try {
+        this.loading()
         const { data } = await login({
           username: this.account,
           password: this.password
         })
         if (data.status === 200) {
           this.setUser(data.body.token)
+          this.$router.push('/my')
           this.$toast.success(data.description)
         } else {
           this.$toast.fail(data.description)
