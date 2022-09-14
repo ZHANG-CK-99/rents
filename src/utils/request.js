@@ -8,9 +8,9 @@ const request = axios.create({
 // 设置请求头
 request.interceptors.request.use(
   function (config) {
-    const { user } = store.state
-    if (user) {
-      config.headers.Authorization = user
+    const { token } = store.state.user
+    if (token) {
+      config.headers.Authorization = token
     }
     return config
   },

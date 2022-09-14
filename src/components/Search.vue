@@ -3,7 +3,7 @@
     <div class="search">
       <div class="searc-left">
         <span class="address" @click="$router.push('/city')">
-          北京
+          杭州
           <van-icon name="arrow-down" />
         </span>
         <span class="break">|</span>

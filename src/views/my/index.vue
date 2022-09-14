@@ -9,7 +9,7 @@
         <div class="avactor">
           <img
             :src="
-              user
+              token
                 ? `http://liufusong.top:8080${userInfo.avatar}`
                 : '@/assets/imgs/avatar.png'
             "
@@ -17,13 +17,13 @@
           />
         </div>
         <div class="details">
-          <div class="uname">{{ user ? userInfo.nickname : '游客' }}</div>
+          <div class="uname">{{ token ? userInfo.nickname : '游客' }}</div>
           <van-button
             @click="logOut"
             class="loginBtn"
             type="primary"
             size="small"
-            >{{ user ? '退出' : '去登录' }}</van-button
+            >{{ token ? '退出' : '去登录' }}</van-button
           >
         </div>
       </div>
@@ -46,7 +46,7 @@
 
 <script>
 import { getUserInfo } from '@/api'
-import { mapState } from 'vuex'
+import { mapState } from '@/store/helper/user'
 import { Dialog } from 'vant'
 export default {
   name: 'MyPage',
@@ -58,29 +58,33 @@ export default {
     }
   },
   computed: {
-    ...mapState(['user'])
+    ...mapState(['token'])
   },
   watch: {},
   created() {
-    if (this.user) {
+    if (this.token) {
       this.getUserInfo()
     }
   },
   mounted() {},
   methods: {
     async getUserInfo() {
-      const {
-        data: { body }
-      } = await getUserInfo()
-      this.userInfo = body
+      try {
+        const {
+          data: { body }
+        } = await getUserInfo()
+        this.userInfo = body
+      } catch (error) {
+        this.$toast.fail('获取用户信息失败')
+      }
     },
     async logOut() {
-      if (!this.user) {
+      if (!this.token) {
         return this.$router.push('/login')
       } else {
         try {
           await Dialog.confirm({ title: '提示', message: '是否确定退出' })
-          this.$store.commit('removeUser')
+          this.$store.commit('user/removeToken')
         } catch (error) {
           this.$toast(error)
         }

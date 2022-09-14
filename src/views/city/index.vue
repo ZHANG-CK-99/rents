@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import { getAllCity, getHotCity } from '@/api/city'
+import { getAllCity, getHotCity } from '@/api'
 export default {
   name: 'CityPage',
   props: {},

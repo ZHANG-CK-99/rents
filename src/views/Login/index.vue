@@ -33,7 +33,7 @@
 </template>
 <script>
 import { passwordRules, userNameRules } from './config'
-import { mapMutations } from 'vuex'
+import { mapMutations } from '@/store/helper/user'
 import { login } from '@/api'
 export default {
   name: 'loginPage',
@@ -60,7 +60,7 @@ export default {
         message: '登录中...'
       })
     },
-    ...mapMutations(['setUser']),
+    ...mapMutations(['setToken']),
     async onSubmit() {
       try {
         this.loading()
@@ -69,7 +69,7 @@ export default {
           password: this.password
         })
         if (data.status === 200) {
-          this.setUser(data.body.token)
+          this.setToken(data.body.token)
           this.$router.push('/my')
           this.$toast.success(data.description)
         } else {

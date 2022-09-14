@@ -19,7 +19,11 @@ import {
   Image as VanImage,
   List,
   IndexBar,
-  IndexAnchor
+  IndexAnchor,
+  DropdownMenu,
+  DropdownItem,
+  Picker,
+  Popup
 } from 'vant'
 
 const VantList = [
@@ -43,7 +47,11 @@ const VantList = [
   VanImage,
   List,
   IndexBar,
-  IndexAnchor
+  IndexAnchor,
+  DropdownMenu,
+  DropdownItem,
+  Picker,
+  Popup
 ]
 
 const registerVants = (Vue) => {
