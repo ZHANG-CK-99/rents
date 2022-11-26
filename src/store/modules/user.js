@@ -14,7 +14,7 @@ const mutations = {
   removeToken(state) {
     state.token = null
     storage.remove('token')
-    log
+    console.log(456)
   }
 }
 
