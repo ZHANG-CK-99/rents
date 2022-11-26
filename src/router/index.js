@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import childrenRouter from './childRouter'
 Vue.use(VueRouter)
 
 const routes = [
@@ -12,33 +12,21 @@ const routes = [
     path: '/',
     component: () => import('@/views/Layout'),
     redirect: 'home',
-    children: [
-      {
-        path: 'home',
-        name: 'home',
-        component: () => import('@/views/home')
-      },
-      {
-        path: 'look',
-        name: 'look',
-        component: () => import('@/views/look')
-      },
-      {
-        path: 'info',
-        name: 'info',
-        component: () => import('@/views/info')
-      },
-      {
-        path: 'my',
-        name: 'my',
-        component: () => import('@/views/my')
-      }
-    ]
+    children: childrenRouter
   },
   {
     path: '/city',
     name: 'city',
     component: () => import('@/views/city')
+  },
+  {
+    path: '/map',
+    component: () => import('@/views/map')
+  },
+  {
+    path: '/detail',
+    props: ({ query: { houseCode } }) => ({ houseCode }),
+    component: () => import('@/views/detail')
   }
 ]
 

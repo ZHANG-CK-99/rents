@@ -11,7 +11,16 @@ module.exports = defineConfig({
     devServer: {
       open: true,
       port: 8080,
-      host: 'localhost'
+      host: 'localhost',
+      proxy: {
+        // 百度地图定位接口api
+        '/map': {
+          target: 'http://api.map.baidu.com/location/ip',
+          pathRewrite: { '^/map': '' },
+          changeOrigin: true,
+          secure: false
+        }
+      }
     },
     resolve: {
       alias: {

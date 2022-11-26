@@ -1,23 +1,6 @@
 <template>
   <div class="home-container">
     <!-- 头部搜索 -->
-    <!-- <div class="search">
-      <div class="searc-left">
-        <span class="address">
-          北京
-          <van-icon name="arrow-down" />
-        </span>
-        <span class="break">|</span>
-        <van-search
-          v-model="keyWorld"
-          disabled
-          placeholder="请输入小区或者地址"
-          background="#fff"
-          class="search-input"
-        />
-      </div>
-      <van-icon name="location-o" color="#fff" />
-    </div> -->
     <search></search>
     <!-- 头部搜索 -->
     <!-- 轮播图 -->
@@ -69,7 +52,7 @@
 </template>
 
 <script>
-import { Rotation, getRentGroups } from '@/api'
+import { Rotation, getRentGroups, getCurrentLocation, getCityInfo } from '@/api'
 export default {
   name: 'HomePage',
   components: {},
@@ -91,6 +74,7 @@ export default {
   created() {
     this.getSwipe()
     this.getRentGroup()
+    this.getCurrentLocation()
   },
   mounted() {},
   methods: {
@@ -105,6 +89,22 @@ export default {
         data: { body }
       } = await getRentGroups()
       this.Rental_group = body
+    },
+    async getCurrentLocation() {
+      try {
+        const ipInfo = await getCurrentLocation()
+        const city = ipInfo.data.content.address_detail.city.replace('市', '')
+        const {
+          data: {
+            body: { label: cityName, value: cityCode }
+          }
+        } = await getCityInfo(city)
+        // 将城市信息存储在vuex中
+        console.log(cityCode, cityName)
+        this.$store.commit('city/SET_CITY', { cityName, cityCode })
+      } catch (error) {
+        this.$toast.fail('获取当前城市定位失败')
+      }
     }
   }
 }

@@ -23,7 +23,8 @@ import {
   DropdownMenu,
   DropdownItem,
   Picker,
-  Popup
+  Popup,
+  Tag
 } from 'vant'
 
 const VantList = [
@@ -51,7 +52,8 @@ const VantList = [
   DropdownMenu,
   DropdownItem,
   Picker,
-  Popup
+  Popup,
+  Tag
 ]
 
 const registerVants = (Vue) => {

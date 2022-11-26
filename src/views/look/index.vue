@@ -4,16 +4,17 @@
     <nav-bar></nav-bar>
     <search></search>
     <!-- 筛选栏 -->
-    <van-dropdown-menu>
+    <van-dropdown-menu class="menu">
       <choose-item
         :queryCondition="areaQueryCondition"
         title="区域"
       ></choose-item>
       <choose-item :queryCondition="rentType" title="方式"></choose-item>
       <choose-item :queryCondition="price" title="租金"></choose-item>
-      <filter-choose></filter-choose>
+      <filter-choose :filterCondition="filterCondition"></filter-choose>
     </van-dropdown-menu>
     <!-- 主体显示栏 -->
+    <rent-list class="list"></rent-list>
   </div>
 </template>
 
@@ -22,9 +23,10 @@ import { getQueryCondision } from '@/api'
 import { mapState } from '@/store/helper/city'
 import ChooseItem from './components/ChooseItem.vue'
 import FilterChoose from './components/FilterChoose.vue'
+import RentList from './components/RentList.vue'
 export default {
   name: 'HomePage',
-  components: { ChooseItem, FilterChoose },
+  components: { ChooseItem, FilterChoose, RentList },
   props: {},
 
   data() {
@@ -71,12 +73,12 @@ export default {
     DataIntegration(body) {
       let {
         area,
-        // characteristic,
-        // floor,
-        // oriented,
+        characteristic,
+        floor,
+        oriented,
         price,
         rentType,
-        // roomType,
+        roomType,
         subway
       } = body
 
@@ -92,6 +94,11 @@ export default {
       this.rentType = rentType
       // 合成租金条件
       this.price = price
+      // 合成筛选条件
+      this.$set(this.filterCondition, 'roomType', roomType)
+      this.$set(this.filterCondition, 'oriented', oriented)
+      this.$set(this.filterCondition, 'floor', floor)
+      this.$set(this.filterCondition, 'characteristic', characteristic)
     },
     addChildrenField(obj) {
       // 递归数据
@@ -99,7 +106,7 @@ export default {
         obj,
         'children'
       )
-      // 如果没有数据
+      // 如果没有子集数据，自己添加子项数据
       if (!isHaveChildren) {
         obj.children = [{ label: '不限', value: 'null' }]
       } else {
@@ -122,5 +129,9 @@ export default {
   .searc-left {
     margin-left: 60px;
   }
+}
+.list {
+  height: calc(100vh - 46px - 48px - 50px);
+  overflow: auto;
 }
 </style>
